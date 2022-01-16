@@ -16,6 +16,15 @@ public class EFSamplesContext : DbContext, IEFSamplesContext
         
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ef_connectionstring");
+        var serverVersion = ServerVersion.AutoDetect(connectionString);
+        optionsBuilder.UseMySql(connectionString, serverVersion);
+        
+        base.OnConfiguring(optionsBuilder);
+    }
+
     public DbSet<Customer> Customers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)

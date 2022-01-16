@@ -15,12 +15,7 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        var connectionString = Environment.GetEnvironmentVariable("ef_connectionstring");
-        var serverVersion = ServerVersion.AutoDetect(connectionString);
-        var options = new DbContextOptionsBuilder<EFSamplesContext>().UseMySql(connectionString, serverVersion)
-                .Options;
-        
-        _dbContext = new EFSamplesContext(options);
+        _dbContext = new EFSamplesContext();
         _sut = new CustomerService(_dbContext);
     }
 
